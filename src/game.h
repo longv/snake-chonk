@@ -6,6 +6,7 @@
 #include "controller.h"
 #include "renderer.h"
 #include "snake.h"
+#include "model/World.h"
 
 class Game {
  public:
@@ -16,6 +17,7 @@ class Game {
   int GetSize() const;
 
  private:
+  World world;
   Snake snake;
   SDL_Point food;
 

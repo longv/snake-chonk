@@ -3,14 +3,13 @@
 #include <iostream>
 
 void Snake::Update() {
-  SDL_Point prev_cell{
-      static_cast<int>(head_x),
-      static_cast<int>(
-          head_y)};  // We first capture the head's cell before updating.
+  // We first capture the head's cell before updating.
+  SDL_Point prev_cell{static_cast<int>(head_x), static_cast<int>(head_y)};  
+
   UpdateHead();
-  SDL_Point current_cell{
-      static_cast<int>(head_x),
-      static_cast<int>(head_y)};  // Capture the head's cell after updating.
+
+  // Capture the head's cell after updating.
+  SDL_Point current_cell{static_cast<int>(head_x), static_cast<int>(head_y)};  
 
   // Update all of the body vector items if the snake head has moved to a new
   // cell.
@@ -30,16 +29,24 @@ void Snake::UpdateHead() {
       break;
 
     case Direction::kLeft:
-      head_x -= speed;
+      if (head_x > speed) {
+        head_x -= speed;
+      } else {
+        head_x = 0;
+      }
       break;
 
     case Direction::kRight:
-      head_x += speed;
+      if (head_x + speed < grid_width) {
+        head_x += speed;
+      } else {
+        head_x = grid_width - 1;
+      }
       break;
   }
 
   // Wrap the Snake around to the beginning if going off of the screen.
-  head_x = fmod(head_x + grid_width, grid_width);
+  //head_x = fmod(head_x + grid_width, grid_width);
   head_y = fmod(head_y + grid_height, grid_height);
 }
 

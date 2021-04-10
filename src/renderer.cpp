@@ -38,7 +38,7 @@ Renderer::~Renderer() {
   SDL_Quit();
 }
 
-void Renderer::Render(Snake const snake, SDL_Point const &food) {
+void Renderer::Render(Snake const snake, World const world) {
   SDL_Rect block;
   block.w = screen_width / grid_width;
   block.h = screen_height / grid_height;
@@ -49,9 +49,13 @@ void Renderer::Render(Snake const snake, SDL_Point const &food) {
 
   // Render food
   SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xCC, 0x00, 0xFF);
-  block.x = food.x * block.w;
-  block.y = food.y * block.h;
-  SDL_RenderFillRect(sdl_renderer, &block);
+  for (ObstacleRow const &row: world.obstacleRows) {
+    for (Obstacle const &obstacle: row.obstacles) {
+      block.x = obstacle.x * block.w;
+      block.y = obstacle.y * block.h;
+      SDL_RenderFillRect(sdl_renderer, &block);
+    }
+  }
 
   // Render snake's body
   SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
@@ -73,6 +77,18 @@ void Renderer::Render(Snake const snake, SDL_Point const &food) {
 
   // Update Screen
   SDL_RenderPresent(sdl_renderer);
+}
+
+void Renderer::RenderObstacles(Obstacle obstacle) {
+  SDL_Rect block;
+  block.w = screen_width / grid_width;
+  block.h = screen_height / grid_height;
+
+  // Render food
+  SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xCC, 0x00, 0xFF);
+  block.x = 1 * block.w;
+  block.y = 2 * block.h;
+  SDL_RenderFillRect(sdl_renderer, &block);
 }
 
 void Renderer::UpdateWindowTitle(int score, int fps) {

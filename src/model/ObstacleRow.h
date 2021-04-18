@@ -9,13 +9,13 @@ using namespace std;
 
 class ObstacleRow: public GameObject {
     public:
-        ObstacleRow(int grid_width);
-        vector<Obstacle> obstacles;
+        ObstacleRow(float width, int obstaclesPerRow);
         void Update();
+        vector<Obstacle> getObstacles() const;
     
     private:
-        int grid_width;
-        float speed{0.1f};
+        vector<Obstacle> _obstacles;
+        float _speed{0.1f};
 };
 
 #endif

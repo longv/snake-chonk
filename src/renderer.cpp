@@ -39,9 +39,12 @@ Renderer::~Renderer() {
 }
 
 void Renderer::Render(Snake const snake, World const world) {
+  int widthPerBlock = screen_width / grid_width;
+  int heightPerBlock = screen_height / grid_height;
+  
   SDL_Rect block;
-  block.w = screen_width / grid_width;
-  block.h = screen_height / grid_height;
+  block.w = widthPerBlock;
+  block.h = heightPerBlock;
 
   // Clear screen
   SDL_SetRenderDrawColor(sdl_renderer, 0x1E, 0x1E, 0x1E, 0xFF);
@@ -50,12 +53,17 @@ void Renderer::Render(Snake const snake, World const world) {
   // Render food
   SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xCC, 0x00, 0xFF);
   for (ObstacleRow const &row: world.obstacleRows) {
-    for (Obstacle const &obstacle: row.obstacles) {
-      block.x = obstacle.x * block.w;
-      block.y = obstacle.y * block.h;
+    for (Obstacle const &obstacle: row.getObstacles()) {
+      block.w = obstacle.getWidth() * widthPerBlock;
+      block.h = obstacle.getHeight() * heightPerBlock;
+      block.x = obstacle.x * widthPerBlock;
+      block.y = obstacle.y * heightPerBlock;
       SDL_RenderFillRect(sdl_renderer, &block);
     }
   }
+
+  block.w = widthPerBlock;
+  block.h = heightPerBlock;
 
   // Render snake's body
   SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xFF, 0xFF, 0xFF);

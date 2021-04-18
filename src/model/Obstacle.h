@@ -5,8 +5,12 @@
 
 class Obstacle: public GameObject {
     public:
-        int width, height;
+        Obstacle(float width, float height);
+        float getWidth() const;
+        float getHeight() const;
 
+    private:
+        float _width, _height;
 };
 
 #endif

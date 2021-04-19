@@ -4,18 +4,25 @@
 #include <vector>
 #include "GameObject.h"
 #include "Obstacle.h"
+#include "Food.h"
 
 using namespace std;
 
+enum RowType { FULL_OBSTACLES, FOOD_ONLY, EMPTY };
+
 class ObstacleRow: public GameObject {
     public:
-        ObstacleRow(float width, int obstaclesPerRow);
+        ObstacleRow(float x, float y, float width, float height, int obstaclesPerRow, RowType type);
         void Update();
-        vector<Obstacle> getObstacles() const;
+        vector<Obstacle> GetObstacles() const;
+        vector<Food> GetFoods() const;
     
     private:
         vector<Obstacle> _obstacles;
+        vector<Food> _foods;
         float _speed{0.1f};
+        void SetupObstacle(int index, float width, float height);
+        void SetupFood(int index, float width, float height);
 };
 
 #endif

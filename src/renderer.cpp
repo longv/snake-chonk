@@ -38,7 +38,7 @@ Renderer::~Renderer() {
   SDL_Quit();
 }
 
-void Renderer::Render(Snake const snake, World const world) {
+void Renderer::Render(Snake const &snake, World const &world) {
   int widthPerBlock = screen_width / grid_width;
   int heightPerBlock = screen_height / grid_height;
   
@@ -50,14 +50,32 @@ void Renderer::Render(Snake const snake, World const world) {
   SDL_SetRenderDrawColor(sdl_renderer, 0x1E, 0x1E, 0x1E, 0xFF);
   SDL_RenderClear(sdl_renderer);
 
-  // Render food
-  SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xCC, 0x00, 0xFF);
-  for (ObstacleRow const &row: world.obstacleRows) {
-    for (Obstacle const &obstacle: row.getObstacles()) {
-      block.w = obstacle.getWidth() * widthPerBlock;
-      block.h = obstacle.getHeight() * heightPerBlock;
-      block.x = obstacle.x * widthPerBlock;
-      block.y = obstacle.y * heightPerBlock;
+  // Render obstacles
+  for (ObstacleRow const &row: world.GetObstacleRows()) {
+    int count = 0;
+    for (Obstacle const &obstacle: row.GetObstacles()) {
+      block.w = obstacle.GetWidth() * widthPerBlock;
+      block.h = obstacle.GetHeight() * heightPerBlock;
+      block.x = obstacle.GetX() * widthPerBlock;
+      block.y = obstacle.GetY() * heightPerBlock;
+      
+      Color color = _colors[count];
+      SDL_SetRenderDrawColor(sdl_renderer, color.r, color.g, color.b, 255);
+      count++;
+      
+      SDL_RenderFillRect(sdl_renderer, &block);
+    }
+
+    // Render food
+    for (Food const &food: row.GetFoods()) {
+      block.w = food.GetWidth() * widthPerBlock;
+      block.h = food.GetHeight() * heightPerBlock;
+      block.x = food.GetX() * widthPerBlock;
+      block.y = food.GetY() * heightPerBlock;
+
+      Color color = _colors[5];
+      SDL_SetRenderDrawColor(sdl_renderer, color.r, color.g, color.b, 255);
+
       SDL_RenderFillRect(sdl_renderer, &block);
     }
   }

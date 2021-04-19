@@ -24,10 +24,8 @@ class World {
         uniform_int_distribution<int> _random_h;
 
         vector<ObstacleRow> _obstacleRows;
-        vector<Food> _foods;
         void SpawnRow();
         RowType GenerateRowType();
-        void SpawnFoods();
         bool IsCollided(GameObject obj1, GameObject obj2);
         bool IsCollidedX(GameObject obj1, GameObject obj2);
         bool IsCollidedY(GameObject obj1, GameObject obj2);

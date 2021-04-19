@@ -14,11 +14,6 @@ void World::Update() {
     for (ObstacleRow &row: _obstacleRows) {
         row.Update();
     }
-
-    // SpawnFoods();
-    // for (Food &food: _foods) {
-    //     food.y += 0.1f;
-    // }
 }
 
 void World::SpawnRow() {
@@ -51,45 +46,8 @@ RowType World::GenerateRowType() {
     }
 }
 
-void World::SpawnFoods() {
-    _foods.erase(
-        remove_if(_foods.begin(), _foods.end(), [this](const Food &food) {  return food.GetY() > grid_height;  }),
-        _foods.end()
-    );
-
-    if (_foods.size() < 10) {
-        Food newFood{_random_w(_engine), _random_h(_engine)};
-        
-        // Check that the location is not occupied by a snake item before placing
-        // food.
-        bool canBeSpawned = true;
-        for (ObstacleRow const &row: _obstacleRows) {
-            cout << "====================================================" << endl;
-            cout << "CanBeSpawned " << canBeSpawned << endl;
-            cout << "IsCollided " << IsCollidedY(newFood, row) << endl;
-            canBeSpawned = canBeSpawned && !IsCollidedY(newFood, row);
-            cout << "CanBeSpawned " << canBeSpawned << endl;
-            cout << "====================================================" << endl;
-        }
-
-        for (Food const &food: _foods) {
-            canBeSpawned = canBeSpawned && !IsCollided(newFood, food);
-        }
-
-        if (canBeSpawned) {
-            _foods.emplace_back(newFood);
-        }
-
-        return;
-    }
-}
-
 vector<ObstacleRow> World::GetObstacleRows() const {
     return _obstacleRows;
-}
-
-vector<Food> World::GetFoods() const {
-    return _foods;
 }
 
 bool World::IsCollided(GameObject obj1, GameObject obj2) {

@@ -29,6 +29,10 @@ class GameObject {
             return _height;
         }
 
+        virtual bool IsVisible() const {
+            return true;
+        }
+
     protected:
         float _x, _y;
         float _width, _height;

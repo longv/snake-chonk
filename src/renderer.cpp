@@ -59,8 +59,12 @@ void Renderer::Render(World const &world) {
       block.x = obstacle.GetX() * widthPerBlock;
       block.y = obstacle.GetY() * heightPerBlock;
       
-      Color color = _colors[count];
-      SDL_SetRenderDrawColor(sdl_renderer, color.r, color.g, color.b, 255);
+      if (obstacle.IsVisible()) {
+        Color color = _colors[count];
+        SDL_SetRenderDrawColor(sdl_renderer, color.r, color.g, color.b, 255);
+      } else {
+        SDL_SetRenderDrawColor(sdl_renderer, 0x1E, 0x1E, 0x1E, 0xFF);
+      }
       count++;
 
       SDL_RenderFillRect(sdl_renderer, &block);
@@ -73,8 +77,12 @@ void Renderer::Render(World const &world) {
       block.x = food.GetX() * widthPerBlock;
       block.y = food.GetY() * heightPerBlock;
 
-      Color color = _colors[5];
-      SDL_SetRenderDrawColor(sdl_renderer, color.r, color.g, color.b, 255);
+      if (food.IsVisible()) {
+        Color color = _colors[5];
+        SDL_SetRenderDrawColor(sdl_renderer, color.r, color.g, color.b, 255);
+      } else {
+        SDL_SetRenderDrawColor(sdl_renderer, 0x1E, 0x1E, 0x1E, 0xFF);
+      }
 
       SDL_RenderFillRect(sdl_renderer, &block);
     }

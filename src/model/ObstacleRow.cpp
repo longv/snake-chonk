@@ -31,23 +31,23 @@ void ObstacleRow::SetupFood(int index, float width, float height) {
 }
 
 void ObstacleRow::Update() {
-    _foods.erase(
-        remove_if(
-            _foods.begin(),
-            _foods.end(),
-            [](Food const &food) { return food.eaten; }
-        ),
-        _foods.end()
-    );
+    // _foods.erase(
+    //     remove_if(
+    //         _foods.begin(),
+    //         _foods.end(),
+    //         [](Food const &food) { return food.eaten; }
+    //     ),
+    //     _foods.end()
+    // );
 
-    _obstacles.erase(
-        remove_if(
-            _obstacles.begin(),
-            _obstacles.end(),
-            [](Obstacle const &obstacle) { return obstacle.eaten; }
-        ),
-        _obstacles.end()
-    );
+    // _obstacles.erase(
+    //     remove_if(
+    //         _obstacles.begin(),
+    //         _obstacles.end(),
+    //         [](Obstacle const &obstacle) { return obstacle.eaten; }
+    //     ),
+    //     _obstacles.end()
+    // );
 
 
     _y += _speed;

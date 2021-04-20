@@ -87,6 +87,7 @@ Snake World::GetSnake() const {
 }
 
 bool World::IsCollidedWithFood(GameObject const &object) {
-    return (_snake.head_x >= object.GetX() && _snake.head_x <= object.GetX() + object.GetWidth()) 
+    return object.IsVisible()
+        && (_snake.head_x >= object.GetX() && _snake.head_x <= object.GetX() + object.GetWidth()) 
         && (_snake.head_y >= object.GetY() && _snake.head_y <= object.GetY() + object.GetHeight());
 }

@@ -1,9 +1,8 @@
 #include "controller.h"
 #include <iostream>
 #include "SDL.h"
-#include "snake.h"
 
-void Controller::HandleInput(bool &running, Snake &snake) const {
+void Controller::HandleInput(Snake &snake, bool &running) const {
   SDL_Event e;
   while (SDL_PollEvent(&e)) {
     if (e.type == SDL_QUIT) {

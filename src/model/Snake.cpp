@@ -1,4 +1,4 @@
-#include "snake.h"
+#include "Snake.h"
 #include <cmath>
 #include <iostream>
 
@@ -11,11 +11,7 @@ void Snake::Update() {
   // Capture the head's cell after updating.
   SDL_Point current_cell{static_cast<int>(head_x), static_cast<int>(head_y)};  
 
-  // Update all of the body vector items if the snake head has moved to a new
-  // cell.
-  if (current_cell.x != prev_cell.x || current_cell.y != prev_cell.y) {
-    UpdateBody(current_cell, prev_cell);
-  }
+  UpdateBody(current_cell, prev_cell);
 }
 
 void Snake::UpdateHead() {
@@ -42,30 +38,44 @@ void Snake::UpdateHead() {
 
   // Wrap the Snake around to the beginning if going off of the screen.
   head_x = fmod(head_x + grid_width, grid_width);
-  cout << "Head x " << head_x << endl;
 }
 
 void Snake::UpdateBody(SDL_Point &current_head_cell, SDL_Point &prev_head_cell) {
-  // Add previous head location to vector
-  body.push_back(prev_head_cell);
+  //body.push_back(prev_head_cell);
 
-  if (!growing) {
-    // Remove the tail from the vector.
-    body.erase(body.begin());
-  } else {
+  if (growing) {
+    cout << "Growing" << endl;
+    float newCellX = head_x;
+    float newCellY = head_y + 1;
+    if (!body.empty()) {
+      SDL_Point lastCell = body.back();
+      newCellX = lastCell.x;
+      newCellY = lastCell.y + 1;
+    }
+    SDL_Point newCell{static_cast<int>(newCellX), static_cast<int>(newCellY)};  
+    body.emplace_back(newCell);
     growing = false;
     size++;
   }
 
-  // Check if the snake has died.
-  for (auto const &item : body) {
-    if (current_head_cell.x == item.x && current_head_cell.y == item.y) {
+  if (shrinking) {
+    if (body.size() < 1) {
       alive = false;
+    } else {
+      body.pop_back();
+      shrinking = false;
+      size--;
     }
+  }
+
+  for (SDL_Point &point: body) {
+    point.x = head_x;
   }
 }
 
 void Snake::GrowBody() { growing = true; }
+
+void Snake::ShrinkBody() { shrinking = true; }
 
 // Inefficient method to check if cell is occupied by snake.
 bool Snake::SnakeCell(int x, int y) {

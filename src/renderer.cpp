@@ -38,7 +38,7 @@ Renderer::~Renderer() {
   SDL_Quit();
 }
 
-void Renderer::Render(Snake const &snake, World const &world) {
+void Renderer::Render(World const &world) {
   int widthPerBlock = screen_width / grid_width;
   int heightPerBlock = screen_height / grid_height;
   
@@ -51,9 +51,9 @@ void Renderer::Render(Snake const &snake, World const &world) {
   SDL_RenderClear(sdl_renderer);
 
   // Render obstacles
-  for (ObstacleRow const &row: world.GetObstacleRows()) {
+  for (ObstacleRow &row: world.GetObstacleRows()) {
     int count = 0;
-    for (Obstacle const &obstacle: row.GetObstacles()) {
+    for (Obstacle &obstacle: row.GetObstacles()) {
       block.w = obstacle.GetWidth() * widthPerBlock;
       block.h = obstacle.GetHeight() * heightPerBlock;
       block.x = obstacle.GetX() * widthPerBlock;
@@ -62,12 +62,12 @@ void Renderer::Render(Snake const &snake, World const &world) {
       Color color = _colors[count];
       SDL_SetRenderDrawColor(sdl_renderer, color.r, color.g, color.b, 255);
       count++;
-      
+
       SDL_RenderFillRect(sdl_renderer, &block);
     }
 
     // Render food
-    for (Food const &food: row.GetFoods()) {
+    for (Food &food: row.GetFoods()) {
       block.w = food.GetWidth() * widthPerBlock;
       block.h = food.GetHeight() * heightPerBlock;
       block.x = food.GetX() * widthPerBlock;
@@ -85,16 +85,16 @@ void Renderer::Render(Snake const &snake, World const &world) {
 
   // Render snake's body
   SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-  for (SDL_Point const &point : snake.body) {
+  for (SDL_Point const &point : world.GetSnake().body) {
     block.x = point.x * block.w;
     block.y = point.y * block.h;
     SDL_RenderFillRect(sdl_renderer, &block);
   }
 
   // Render snake's head
-  block.x = static_cast<int>(snake.head_x) * block.w;
-  block.y = static_cast<int>(snake.head_y) * block.h;
-  if (snake.alive) {
+  block.x = static_cast<int>(world.GetSnake().head_x) * block.w;
+  block.y = static_cast<int>(world.GetSnake().head_y) * block.h;
+  if (world.GetSnake().alive) {
     SDL_SetRenderDrawColor(sdl_renderer, 0x00, 0x7A, 0xCC, 0xFF);
   } else {
     SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0x00, 0x00, 0xFF);

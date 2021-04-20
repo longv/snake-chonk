@@ -14,8 +14,8 @@ class ObstacleRow: public GameObject {
     public:
         ObstacleRow(float x, float y, float width, float height, int obstaclesPerRow, RowType type);
         void Update();
-        vector<Obstacle> GetObstacles() const;
-        vector<Food> GetFoods() const;
+        vector<Obstacle> &GetObstacles();
+        vector<Food> &GetFoods();
     
     private:
         vector<Obstacle> _obstacles;

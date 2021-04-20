@@ -1,5 +1,6 @@
 #include "ObstacleRow.h"
 #include <iostream>
+#include <algorithm>
 
 ObstacleRow::ObstacleRow(float x, float y, float width, float height, int obstaclesPerRow, RowType type): GameObject{x, y, width, height} {
     float obstacleWidth = width / obstaclesPerRow;
@@ -30,6 +31,25 @@ void ObstacleRow::SetupFood(int index, float width, float height) {
 }
 
 void ObstacleRow::Update() {
+    _foods.erase(
+        remove_if(
+            _foods.begin(),
+            _foods.end(),
+            [](Food const &food) { return food.eaten; }
+        ),
+        _foods.end()
+    );
+
+    _obstacles.erase(
+        remove_if(
+            _obstacles.begin(),
+            _obstacles.end(),
+            [](Obstacle const &obstacle) { return obstacle.eaten; }
+        ),
+        _obstacles.end()
+    );
+
+
     _y += _speed;
     for (Obstacle &obstacle: _obstacles) {
         obstacle.SetY(_y);
@@ -39,10 +59,10 @@ void ObstacleRow::Update() {
     }
 }
 
-vector<Obstacle> ObstacleRow::GetObstacles() const {
+vector<Obstacle> &ObstacleRow::GetObstacles() {
     return _obstacles;
 }
 
-vector<Food> ObstacleRow::GetFoods() const {
+vector<Food> &ObstacleRow::GetFoods() {
     return _foods;
 }

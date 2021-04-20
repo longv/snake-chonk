@@ -3,8 +3,8 @@
 
 #include <vector>
 #include "SDL.h"
-#include "snake.h"
-#include "model/World.h"
+#include "model/Snake.h"
+#include "World.h"
 #include "model/Obstacle.h"
 #include "model/Color.h"
 
@@ -16,7 +16,7 @@ class Renderer {
            const std::size_t grid_width, const std::size_t grid_height);
   ~Renderer();
 
-  void Render(Snake const &snake, World const &world);
+  void Render(World const &world);
   void RenderObstacles(Obstacle obstacle);
   void UpdateWindowTitle(int score, int fps);
 

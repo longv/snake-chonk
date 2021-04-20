@@ -6,6 +6,7 @@
 class Obstacle: public GameObject {
     public:
         Obstacle(float x, float y, float width, float height): GameObject{x, y, width, height} {}
+        bool eaten{false};
 };
 
 #endif

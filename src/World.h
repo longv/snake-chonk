@@ -4,15 +4,19 @@
 #include <vector>
 #include <random>
 #include <algorithm>
-#include "ObstacleRow.h"
-#include "Food.h"
+#include "controller.h"
+#include "model/ObstacleRow.h"
+#include "model/Food.h"
+#include "model/Snake.h"
 
 using namespace std;
 
 class World {
     public:
         World(int grid_width, int grid_height);
+        void HandleInput(Controller const &controller, bool &running);
         void Update();
+        Snake GetSnake() const;
         vector<ObstacleRow> GetObstacleRows() const;
         vector<Food> GetFoods() const;
 
@@ -23,12 +27,14 @@ class World {
         uniform_int_distribution<int> _random_w;
         uniform_int_distribution<int> _random_h;
 
+        Snake _snake;
+        void UpdateSnake();
+
         vector<ObstacleRow> _obstacleRows;
         void SpawnRow();
         RowType GenerateRowType();
-        bool IsCollided(GameObject obj1, GameObject obj2);
-        bool IsCollidedX(GameObject obj1, GameObject obj2);
-        bool IsCollidedY(GameObject obj1, GameObject obj2);
+
+        bool IsCollidedWithFood(GameObject const &object);
 };
 
 #endif

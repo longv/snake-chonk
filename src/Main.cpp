@@ -1,6 +1,6 @@
-#include "controller.h"
-#include "game.h"
-#include "renderer.h"
+#include "Controller.h"
+#include "Game.h"
+#include "Renderer.h"
 #include <iostream>
 
 int main()

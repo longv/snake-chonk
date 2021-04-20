@@ -1,4 +1,4 @@
-#include "controller.h"
+#include "Controller.h"
 #include "SDL.h"
 #include <iostream>
 

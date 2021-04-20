@@ -1,10 +1,10 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include "Controller.h"
+#include "Renderer.h"
 #include "SDL.h"
 #include "World.h"
-#include "controller.h"
-#include "renderer.h"
 #include <random>
 
 class Game

@@ -1,7 +1,7 @@
 #ifndef WORLD_H
 #define WORLD_H
 
-#include "controller.h"
+#include "Controller.h"
 #include "model/Food.h"
 #include "model/ObstacleRow.h"
 #include "model/Snake.h"

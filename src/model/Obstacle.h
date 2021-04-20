@@ -3,14 +3,16 @@
 
 #include "GameObject.h"
 
-class Obstacle: public GameObject {
-    public:
-        Obstacle(float x, float y, float width, float height): GameObject{x, y, width, height} {}
-        bool eaten{false};
+class Obstacle : public GameObject
+{
+public:
+    Obstacle(float x, float y, float width, float height)
+        : GameObject{x, y, width, height}
+    {
+    }
+    bool eaten{false};
 
-        bool IsVisible() const {
-            return !eaten;
-        }
+    bool IsVisible() const { return !eaten; }
 };
 
 #endif

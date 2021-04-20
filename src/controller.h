@@ -3,9 +3,10 @@
 
 #include "model/Snake.h"
 
-class Controller {
- public:
-  void HandleInput(Snake &snake, bool &running) const;
+class Controller
+{
+public:
+    void HandleInput(Snake& snake, bool& running) const;
 };
 
 #endif

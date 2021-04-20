@@ -22,7 +22,6 @@ class Snake {
 
   void GrowBody();
   void ShrinkBody();
-  bool SnakeCell(int x, int y);
 
   Direction direction = Direction::kNone;
 

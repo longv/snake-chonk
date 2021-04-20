@@ -41,10 +41,7 @@ void Snake::UpdateHead() {
 }
 
 void Snake::UpdateBody(SDL_Point &current_head_cell, SDL_Point &prev_head_cell) {
-  //body.push_back(prev_head_cell);
-
   if (growing) {
-    cout << "Growing" << endl;
     float newCellX = head_x;
     float newCellY = head_y + 1;
     if (!body.empty()) {
@@ -76,16 +73,3 @@ void Snake::UpdateBody(SDL_Point &current_head_cell, SDL_Point &prev_head_cell) 
 void Snake::GrowBody() { growing = true; }
 
 void Snake::ShrinkBody() { shrinking = true; }
-
-// Inefficient method to check if cell is occupied by snake.
-bool Snake::SnakeCell(int x, int y) {
-  if (x == static_cast<int>(head_x) && y == static_cast<int>(head_y)) {
-    return true;
-  }
-  for (auto const &item : body) {
-    if (x == item.x && y == item.y) {
-      return true;
-    }
-  }
-  return false;
-}

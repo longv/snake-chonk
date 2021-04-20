@@ -15,8 +15,8 @@ class Game {
   int GetScore() const;
 
  private:
-  World world;
-  int score{0};
+  World _world;
+  int _score{0};
 };
 
 #endif

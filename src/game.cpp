@@ -1,7 +1,7 @@
 #include "game.h"
 #include <iostream>
 
-Game::Game(std::size_t grid_width, std::size_t grid_height): world(grid_width, grid_height) {}
+Game::Game(std::size_t grid_width, std::size_t grid_height): _world(grid_width, grid_height) {}
 
 void Game::Run(Controller const &controller, Renderer &renderer, std::size_t target_frame_duration) {
   Uint32 title_timestamp = SDL_GetTicks();
@@ -14,10 +14,12 @@ void Game::Run(Controller const &controller, Renderer &renderer, std::size_t tar
   while (running) {
     frame_start = SDL_GetTicks();
 
-    // Input, Update, Render - the main game loop.
-    world.HandleInput(controller, running);
-    world.Update();
-    renderer.Render(world);
+    // Handle input and update logic
+    _world.HandleInput(controller, running);
+    _world.Update(_score);
+
+    // Render the world
+    renderer.Render(_world);
 
     frame_end = SDL_GetTicks();
 
@@ -28,7 +30,7 @@ void Game::Run(Controller const &controller, Renderer &renderer, std::size_t tar
 
     // After every second, update the window title.
     if (frame_end - title_timestamp >= 1000) {
-      renderer.UpdateWindowTitle(score, frame_count);
+      renderer.UpdateWindowTitle(_score, frame_count, !_world.GetSnake().alive);
       frame_count = 0;
       title_timestamp = frame_end;
     }
@@ -42,4 +44,4 @@ void Game::Run(Controller const &controller, Renderer &renderer, std::size_t tar
   }
 }
 
-int Game::GetScore() const { return score; }
+int Game::GetScore() const { return _score; }

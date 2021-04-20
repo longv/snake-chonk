@@ -18,7 +18,7 @@ class Renderer {
 
   void Render(World const &world);
   void RenderObstacles(Obstacle obstacle);
-  void UpdateWindowTitle(int score, int fps);
+  void UpdateWindowTitle(int score, int fps, bool gameEnd);
 
  private:
   SDL_Window *sdl_window;

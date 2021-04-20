@@ -117,7 +117,12 @@ void Renderer::RenderObstacles(Obstacle obstacle) {
   SDL_RenderFillRect(sdl_renderer, &block);
 }
 
-void Renderer::UpdateWindowTitle(int score, int fps) {
-  std::string title{"Snake Score: " + std::to_string(score) + " FPS: " + std::to_string(fps)};
-  SDL_SetWindowTitle(sdl_window, title.c_str());
+void Renderer::UpdateWindowTitle(int score, int fps, bool gameEnd) {
+  if (gameEnd) {
+    std::string title{"You died! Final Score: " + std::to_string(score)};
+    SDL_SetWindowTitle(sdl_window, title.c_str());
+  } else {
+    std::string title{"Snake Score: " + std::to_string(score) + " FPS: " + std::to_string(fps)};
+    SDL_SetWindowTitle(sdl_window, title.c_str());
+  }
 }
